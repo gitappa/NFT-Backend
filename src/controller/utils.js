@@ -20,7 +20,6 @@ const newCommonObj = new commonCall()
         
         
         var format24Hour = `${format.mm}/${format.dd}/${format.yyyy} ${format.HH}:${format.MM}:${format.SS}`
-        console.log("..........format24Hour...........",format24Hour);
         return format24Hour
     }
 
@@ -38,10 +37,8 @@ const newCommonObj = new commonCall()
             if(result.data["venlyUser"] && Object.keys(result.data.venlyUser).length>0){
                 if(result.data.venlyUser.wallets.length>0 && result.data.venlyUser.wallets[0]["secretType"] === "HEDERA"){
                     Hedera_address = result.data.venlyUser.wallets[0]["address"]
-                    console.log("....inside..venly id",Hedera_address)
                 }
             }
-            console.log("...outside...venly id",result.data.venlyUser.wallets[0]["address"])
             return Hedera_address
         });
     }

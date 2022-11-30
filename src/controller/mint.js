@@ -81,25 +81,19 @@ async function createAndMitNFT(req,res){
         "status_code" :400
     }
 	try{
-        
         if(req.body.user_id){
             query["user_id"]=req.body.user_id
         }else{
             missing_field = "user_id"
         }
-
         if(req.body.type){
             query["type"] = req.body.type
         }else{
             missing_field = "type"
         }
-
-
 		metadata["name"] = req.body.metadata_name || "Unthink Creator"
 		metadata["description"] = req.body.metadata_description || "Joined the Unthink creator community"
-
-    
-		if (missing_field){
+    	if (missing_field){
 			response["status_desc"] = `missing field ${missing_field}`
 			res.json(response)
 			return;
@@ -123,6 +117,7 @@ async function createAndMitNFT(req,res){
 		const mintRx = await tokenMinterFcn(tokenId, CID, client, operatorKey);
 		console.log(`Created NFT ${tokenId} with serial: ${mintRx.serials[0].low}`); 
 
+		//Get AliceID dynamically with the user id from UI
 		const aliceID = await utilsCall.getAliceId(query["user_id"])
 		
 		// Transfer the NFT from treasury to Alice
@@ -142,8 +137,6 @@ async function createAndMitNFT(req,res){
         response["status_code"] = 200
 		response["status_desc"] = `NFT transfer from Treasury to ${aliceID}: ${tokenTransferRx.status}`
 		res.json(response);
-	
-		
 	}catch (err) {
 		//exception err to be sent with 500 code
 		console.error(err);

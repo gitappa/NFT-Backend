@@ -31,13 +31,10 @@ class CommonClass{
                             });
                             response.on("end", () => {
                                 body = JSON.parse(body);
-                                // callback(body);
-                                //console.log("resolving promise", body);
                                 resolve(body);
                             });
                         });
                     }else{
-                        //reject(`${response.statusCode} error`)
                         console.log(`${response.statusCode} on HTTP call`);
                         
                     }
@@ -55,7 +52,6 @@ class CommonClass{
                 };
                 console.log("[INFO] callHttpApi :: calling post request", params);
                 var req = https.request(options, resp => {
-                    //console.log(resp);
                     resp.setEncoding("utf8");
                     let body = "";
                     resp.on("data", data => {
@@ -68,20 +64,14 @@ class CommonClass{
                         }catch (e) {
                             console.log("***********exception************",e);
                         }
-                        //console.log("body : ",body);
-                        // callback(body);
-                        // return body;
                         resolve(body);
                     });
                 })
                 req.on('error', error => {
                     console.log('Error: ', err.message);
                 });
-                //console.log('Http response -1');
                 req.write(params.data);
-                //console.log('Http response -2');
                 req.end();
-                //console.log('Http response -3');
             } else {
                 console.log("[ALARM] callHttpApi :: unsupported http method");
                 reject("unsupported http method");
